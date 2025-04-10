@@ -1,7 +1,7 @@
 <!-- BEGIN_TF_DOCS -->
-# wanted-cloud/terraform-module-template
+# wanted-cloud/terraform-azure-function-app
 
-This repository represents a template for a Terraform building block module as we think it should be done, so it's for sure opinionated but in our eyes simple and powerful. Feel free to use or contribute.
+Terraform building block module for setup and creation of Azure Function Application.
 
 ## Table of contents
 
@@ -15,19 +15,65 @@ This repository represents a template for a Terraform building block module as w
 
 ## Requirements
 
-No requirements.
+The following requirements are needed by this module:
+
+- <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (>= 1.9)
+
+- <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (>=4.20.0)
 
 ## Providers
 
-No providers.
+The following providers are used by this module:
+
+- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (>=4.20.0)
 
 ## Required Inputs
 
-No required inputs.
+The following input variables are required:
+
+### <a name="input_name"></a> [name](#input\_name)
+
+Description: Name of the Azure Function application.
+
+Type: `string`
+
+### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
+
+Description: Name of the resource group in which the Azure Function application will be created.
+
+Type: `string`
+
+### <a name="input_service_plan_name"></a> [service\_plan\_name](#input\_service\_plan\_name)
+
+Description: Name of the service plan used for Azure Function application.
+
+Type: `string`
+
+### <a name="input_storage_account_name"></a> [storage\_account\_name](#input\_storage\_account\_name)
+
+Description: Name of the storage account used for Azure Function application.
+
+Type: `string`
 
 ## Optional Inputs
 
 The following input variables are optional (have default values):
+
+### <a name="input_identity_type"></a> [identity\_type](#input\_identity\_type)
+
+Description: Type of identity to use for the Azure service plan.
+
+Type: `string`
+
+Default: `""`
+
+### <a name="input_location"></a> [location](#input\_location)
+
+Description: Location of the resource group in which the Azure Function application will be created, if not set it will be the same as the resource group.
+
+Type: `string`
+
+Default: `""`
 
 ### <a name="input_metadata"></a> [metadata](#input\_metadata)
 
@@ -55,13 +101,47 @@ object({
 
 Default: `{}`
 
+### <a name="input_service_plan_resource_group_name"></a> [service\_plan\_resource\_group\_name](#input\_service\_plan\_resource\_group\_name)
+
+Description: Name of the service plan resource group. If omitted, the resource group name of function app will be used.
+
+Type: `string`
+
+Default: `""`
+
+### <a name="input_storage_account_resource_group_name"></a> [storage\_account\_resource\_group\_name](#input\_storage\_account\_resource\_group\_name)
+
+Description: Name of the resource group in which the storage account will be created.
+
+Type: `string`
+
+Default: `""`
+
+### <a name="input_user_assigned_identity_ids"></a> [user\_assigned\_identity\_ids](#input\_user\_assigned\_identity\_ids)
+
+Description: List of user assigned identity IDs for the Azure service plan.
+
+Type: `list(string)`
+
+Default: `""`
+
 ## Outputs
 
-No outputs.
+The following outputs are exported:
+
+### <a name="output_function_app"></a> [function\_app](#output\_function\_app)
+
+Description: The Azure Function application.
 
 ## Resources
 
-No resources.
+The following resources are used by this module:
+
+- [azurerm_linux_function_app.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_function_app) (resource)
+- [azurerm_windows_function_app.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/windows_function_app) (resource)
+- [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) (data source)
+- [azurerm_service_plan.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/service_plan) (data source)
+- [azurerm_storage_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/storage_account) (data source)
 
 ## Usage
 
@@ -71,7 +151,7 @@ Module was also published via Terraform Registry and can be used as a module fro
 
 ```hcl
 module "example" {
-  source  = "wanted-cloud/..."
+  source  = "wanted-cloud/function-app/azure"
   version = "x.y.z"
 }
 ```

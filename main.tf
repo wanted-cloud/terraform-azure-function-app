@@ -1,9 +1,10 @@
 /*
- * # wanted-cloud/terraform-module-template
+ * # wanted-cloud/terraform-azure-function-app
  * 
- * This repository represents a template for a Terraform building block module as we think it should be done, so it's for sure opinionated but in our eyes simple and powerful. Feel free to use or contribute.
+ * Terraform building block module for setup and creation of Azure Function Application.
  */
 
-/*
- * Here is perfect place for you main resource which should be created by this module. Use "this" as name for the main resource and its dependencies.
- */
+data "azurerm_service_plan" "this" {
+  name                = var.service_plan_name
+  resource_group_name = var.service_plan_resource_group_name != "" ? var.service_plan_resource_group_name : data.azurerm_resource_group.this.name
+}
