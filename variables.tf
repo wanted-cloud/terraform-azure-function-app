@@ -46,5 +46,5 @@ variable "identity_type" {
 variable "user_assigned_identity_ids" {
   description = "List of user assigned identity IDs for the Azure service plan."
   type        = list(string)
-  default     = ""
+  default     = []
 }
